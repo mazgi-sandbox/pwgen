@@ -49,12 +49,12 @@ jobs:
           UPLOAD_URL: $(cat upload_url.txt)
       - run: echo ${UPLOAD_URL}
       - run: echo {{ UPLOAD_URL }}
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPLOAD_URL: ${{ UPLOAD_URL }}
-        with:
-          upload_url: ${{ UPLOAD_URL }}
-          asset_path: target/release/pwgen
-          asset_name: pwgen.${{ runner.os }}
-          asset_content_type: application/octet-stream
+      # - uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     UPLOAD_URL: ${{ UPLOAD_URL }}
+      #   with:
+      #     upload_url: ${{ UPLOAD_URL }}
+      #     asset_path: target/release/pwgen
+      #     asset_name: pwgen.${{ runner.os }}
+      #     asset_content_type: application/octet-stream
