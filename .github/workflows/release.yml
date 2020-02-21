@@ -42,7 +42,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: upload_url
-          path: upload_url.txt
+          path: .
       - run: ::set-env name=UPLOAD_URL::$(cat upload_url.txt)
       - uses: allenevans/set-env@v1.0.0
         with:
