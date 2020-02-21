@@ -44,6 +44,11 @@ jobs:
           name: upload_url
           path: upload_url.txt
       - run: ::set-env name=UPLOAD_URL::$(cat upload_url.txt)
+      - uses: allenevans/set-env@v1.0.0
+        with:
+          UPLOAD_URL: $(cat upload_url.txt)
+      - run: echo ${UPLOAD_URL}
+      - run: echo {{ UPLOAD_URL }}
       - uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
