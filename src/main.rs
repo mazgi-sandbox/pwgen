@@ -11,5 +11,5 @@ fn main() {
             CHARS[idx] as char
         })
         .collect();
-    println!("{:?}", ret)
+    println!("{}", ret)
 }
