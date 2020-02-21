@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  build:
+  prepare:
     name: prepare
     runs-on: ubuntu-latest
     steps:
