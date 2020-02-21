@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     name: prepare
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/create-release@v1
         id: create_release
