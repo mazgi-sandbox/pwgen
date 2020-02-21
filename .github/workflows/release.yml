@@ -21,8 +21,11 @@ jobs:
             Released by GitHub Actions
           draft: false
           prerelease: false
-      - run: echo ${{ steps.create_release.outputs.upload_url }}
-
+      - run: echo ${{ steps.create_release.outputs.upload_url }} > upload_url.txt
+      - uses: actions/upload-artifact@v1
+        with:
+          name: upload_url
+          path: upload_url.txt
   build:
     needs: prepare
     name: build
@@ -36,11 +39,16 @@ jobs:
         with:
           command: build
           args: --release --all-features
+      - uses: actions/download-artifact@v1
+        with:
+          name: upload_url
+          path: upload_url.txt
+      - run: export UPLOAD_URL=$(cat upload_url.txt)
       - uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ UPLOAD_URL }}
           asset_path: target/release/pwgen
           asset_name: pwgen.${{ runner.os }}
           asset_content_type: application/octet-stream
