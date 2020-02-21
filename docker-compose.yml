@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  ws:
+    build:
+      context: Dockerfile.d/ws.development
+      args:
+        UID: ${UID:-0}
+        GID: ${GID:-0}
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    user: "${UID:-0}:${GID:-0}"
+    command:
+      - bash
+      - -c
+      - |
+        cargo run
