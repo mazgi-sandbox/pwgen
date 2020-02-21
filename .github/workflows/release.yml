@@ -43,7 +43,6 @@ jobs:
         with:
           name: upload_url
           path: .
-      - run: ::set-env name=UPLOAD_URL::$(cat upload_url.txt)
       - uses: allenevans/set-env@v1.0.0
         with:
           UPLOAD_URL: $(cat upload_url.txt)
