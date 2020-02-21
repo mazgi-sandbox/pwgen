@@ -7,14 +7,8 @@ on:
 
 jobs:
   build:
-    name: build
-    runs-on: ubuntu-latest
+    name: prepare
     steps:
-      - uses: actions/checkout@master
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --all-features
       - uses: actions/create-release@v1
         id: create_release
         env:
@@ -26,11 +20,25 @@ jobs:
             Released by GitHub Actions
           draft: false
           prerelease: false
+
+  build:
+    needs: prepare
+    name: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --all-features
       - uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: target/release/pwgen
-          asset_name: pwgen.linux-amd64
+          asset_name: pwgen.${{ runner.os }}
           asset_content_type: application/octet-stream
